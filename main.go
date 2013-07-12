@@ -9,10 +9,6 @@ import (
   "flag"
 )
 
-const (
-  /* Url = "http://localhost:5000/api/status"*/
-)
-
 func main() {
   status := flag.String("p", "", "Push a new status")
   flag.Parse()
