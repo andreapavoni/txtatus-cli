@@ -21,8 +21,13 @@ import (
 const endpoint = "http://txtatus.com/api/status"
 
 func main() {
+	token := env.StringDefault("TXTATUS_TOKEN", "")
+	if token == "" {
+		fmt.Println("The TXTATUS_TOKEN environment variable must be set.")
+		return
+	}
 	t := Txtatus{
-		Token: env.String("TXTATUS_TOKEN"),
+		Token: token,
 	}
 	// status := flag.String("p", "", "Push a new status")
 	flag.Parse()
