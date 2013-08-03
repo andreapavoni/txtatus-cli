@@ -1,6 +1,6 @@
 # Txtatus command line client
 
-A very simple (stupid) command line client to push statuses on http://txtatus.com
+A simple command line client to push statuses to [Txtatus](http://txtatus.com).
 
 
 ## Installation
@@ -9,11 +9,15 @@ A very simple (stupid) command line client to push statuses on http://txtatus.co
 go install github.com/apeacox/txtatus-cli
 ```
 
+
 ## Usage
 
 ```
-TXTATUS_TOKEN="yourAPIkey" /path/to/txtatus-cli -p "your shiny new status"
+TXTATUS_TOKEN="yourAPIkey" /path/to/txtatus-cli "your shiny new status"
 ```
+
+Note the quote marks around the status message!
+
 
 ## TODO
 
