@@ -14,6 +14,7 @@ import (
 	"log"
 	"net/http"
 	"net/url"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -30,6 +31,7 @@ func main() {
 		Token: token,
 	}
 	// status := flag.String("p", "", "Push a new status")
+	verbose := flag.Bool("v", false, "Verbose output")
 	flag.Parse()
 	args := flag.Args()
 	if flag.NArg() != 1 {
@@ -40,13 +42,23 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	dur, err := time.ParseDuration(strconv.Itoa(res.Time) + "s")
+	var timeStr string
+	if err == nil {
+		timeStr = dur.String()
+	} else {
+		timeStr = strconv.Itoa(res.Time)
+	}
 	fmt.Println("--- Txtatus Status Posted ---")
 	fmt.Println(" Status ID:", res.Id)
-	fmt.Println("   User ID:", res.UserId)
-	fmt.Println("Project ID:", res.ProjectId)
-	fmt.Println("Created At:", res.CreatedAt)
-	fmt.Println("      Date:", res.Date)
-	fmt.Println("      Time:", res.Time)
+	if *verbose {
+		fmt.Println("   User ID:", res.UserId)
+		fmt.Println("Project ID:", res.ProjectId)
+		fmt.Println("Created At:", res.CreatedAt)
+		fmt.Println("      Date:", res.Date)
+
+	}
+	fmt.Println("      Time:", timeStr)
 	fmt.Println("      Body:", res.Body)
 	fmt.Println("      Tags:", strings.Join(res.Tags, ", "))
 }
