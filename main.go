@@ -14,12 +14,19 @@ import (
 	"log"
 	"net/http"
 	"net/url"
+	"os"
 	"strconv"
 	"strings"
 	"time"
 )
 
 const endpoint = "http://txtatus.com/api/status"
+
+var usage = func() {
+	fmt.Fprintf(os.Stderr, "Usage of %s:\n", os.Args[0])
+	fmt.Fprintf(os.Stderr, "%s [-v] \"spent %%2.hours doing #dev on @myproject\"\n", os.Args[0])
+	flag.PrintDefaults()
+}
 
 func main() {
 	token := env.StringDefault("TXTATUS_TOKEN", "")
@@ -31,11 +38,13 @@ func main() {
 		Token: token,
 	}
 	// status := flag.String("p", "", "Push a new status")
+	flag.Usage = usage
 	verbose := flag.Bool("v", false, "Verbose output")
 	flag.Parse()
 	args := flag.Args()
 	if flag.NArg() != 1 {
 		fmt.Println("Must supply a quoted status message")
+		usage()
 		return
 	}
 	res, err := t.Send(args[0])
